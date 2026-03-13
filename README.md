@@ -111,7 +111,7 @@ npm run build:linux
 ## 版权信息
 
 - **作者**: zmx199299
-- **开发工具**: CodeBuddy-CN
+- **开发工具**: CodeBuddy-CN, Trae-CN, Opencode
 - **开源协议**: GPL-3.0
 
 ## 许可证

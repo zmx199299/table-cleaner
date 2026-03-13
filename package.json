@@ -33,7 +33,7 @@
   },
   "build": {
     "appId": "com.tablecleaner.app",
-    "productName": "表格自动化清理工具",
+    "productName": "table-cleaner",
     "directories": {
       "output": "dist"
     },
