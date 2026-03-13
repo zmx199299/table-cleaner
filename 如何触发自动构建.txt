@@ -1,0 +1,96 @@
+===========================================
+如何触发 GitHub Actions 自动构建
+===========================================
+
+## 问题说明
+
+✅ 已修复的问题:
+1. ❌ PUSH_TO_GITHUB.sh 已从 GitHub 中删除(只在本地保留)
+2. ❌ GitHub Actions 配置已修复,添加了 Python 环境支持
+
+## 现在需要你手动执行以下步骤
+
+### 步骤 1: 推送最新代码到 GitHub
+
+在项目目录执行:
+
+cd '/mnt/c/Users/zmx19/OneDrive/私人/codelearn/表格自动化清理'
+git push origin master
+
+输入 GitHub 用户名和 Personal Access Token
+
+### 步骤 2: 创建版本标签并推送
+
+git tag v1.0.0
+git push origin v1.0.0
+
+### 步骤 3: 触发自动构建(两种方式)
+
+#### 方式 1: 通过版本标签自动触发(推荐)
+推送版本标签后,GitHub Actions 会自动开始构建
+
+#### 方式 2: 手动触发构建
+1. 访问 GitHub 仓库页面
+2. 点击 "Actions" 标签
+3. 选择 "Build and Release" workflow
+4. 点击 "Run workflow" 按钮
+5. 选择分支 "master"
+6. 点击 "Run workflow" 按钮
+
+### 步骤 4: 查看构建进度
+
+1. 访问: https://github.com/你的用户名/table-cleaner/actions
+2. 等待构建完成(通常需要 5-10 分钟)
+3. 看到绿色 ✅ 表示构建成功
+
+### 步骤 5: 下载安装包
+
+构建成功后:
+
+1. 访问: https://github.com/你的用户名/table-cleaner/releases
+2. 找到 "v1.0.0" Release
+3. 下载对应平台的安装包:
+   - Windows: 表格自动化清理工具 Setup v1.0.0.exe
+   - macOS: 表格自动化清理工具-v1.0.0.dmg
+   - Linux: 表格自动化清理工具-v1.0.0.AppImage 或 .deb
+
+===========================================
+📝 已修复的 GitHub Actions 配置
+===========================================
+
+修复内容:
+- ✅ 更新 actions 版本到 v4
+- ✅ 添加 Python 环境安装步骤
+- ✅ 添加 Python 虚拟环境创建
+- ✅ 安装 Python 依赖 (pandas, openpyxl 等)
+- ✅ 修复 artifact 上传配置
+
+===========================================
+⚠️ 注意事项
+===========================================
+
+1. Personal Access Token 必须有 'repo' 权限
+2. 仓库必须是 Public 或你有写入权限的 Private
+3. 构建时间可能需要 5-10 分钟
+4. 如果构建失败,查看 Actions 日志排查问题
+
+===========================================
+🔍 常见构建失败原因
+===========================================
+
+1. "npm ci" 失败
+   - 解决: 检查 package.json 中的依赖是否正确
+
+2. Python 安装失败
+   - 解决: 已在 workflow 中添加 Python 安装步骤
+
+3. "pip install" 失败
+   - 解决: 检查 requirements.txt 中的包名是否正确
+
+4. "npm run build" 失败
+   - 解决: 检查 electron-builder 配置是否正确
+
+===========================================
+作者: zmx199299
+开发工具: CodeBuddy-CN
+日期: 2026-03-13

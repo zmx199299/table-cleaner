@@ -1,0 +1,153 @@
+===========================================
+🚨 重要: 需要手动推送代码
+===========================================
+
+## 当前情况
+
+✅ 本地有 2 个新提交需要推送:
+   - 8835955: 移除自动上传脚本
+   - 07ef5ee: 修复 GitHub Actions 配置
+
+❌ 远程仓库还是旧版本(包含上传脚本)
+
+⚠️ 终端无法交互,需要你在自己的终端中手动操作
+
+===========================================
+📝 你需要做的步骤
+===========================================
+
+### 方式 1: 使用 Windows 命令提示符(cmd)
+
+1. 按 Win+R,输入 cmd,回车
+
+2. 进入项目目录:
+   cd C:\Users\zmx19\OneDrive\私人\codelearn\表格自动化清理
+
+3. 推送代码到 GitHub:
+   git push origin master
+
+4. 输入凭证:
+   Username: zmx199299
+   Password: [你的 Personal Access Token]
+
+5. 创建版本标签:
+   git tag v1.0.0
+
+6. 推送标签:
+   git push origin v1.0.0
+
+### 方式 2: 使用 PowerShell
+
+1. 按 Win+X,选择 "Windows PowerShell"
+
+2. 进入项目目录:
+   cd C:\Users\zmx19\OneDrive\私人\codelearn\表格自动化清理
+
+3. 推送代码:
+   git push origin master
+
+4. 输入凭证:
+   Username: zmx199299
+   Password: [你的 Personal Access Token]
+
+5. 创建并推送标签:
+   git tag v1.0.0
+   git push origin v1.0.0
+
+### 方式 3: 使用 Git Bash
+
+1. 打开 Git Bash(如果安装了 Git for Windows)
+
+2. 进入项目目录:
+   cd '/mnt/c/Users/zmx19/OneDrive/私人/codelearn/表格自动化清理'
+
+3. 推送代码:
+   git push origin master
+
+4. 输入凭证:
+   Username: zmx199299
+   Password: [你的 Personal Access Token]
+
+5. 创建并推送标签:
+   git tag v1.0.0
+   git push origin v1.0.0
+
+### 方式 4: 使用 GitHub Desktop(最简单)
+
+1. 打开 GitHub Desktop 应用
+2. 选择当前仓库
+3. 点击 "Fetch origin" 按钮同步
+4. 点击 "Push origin" 按钮推送代码
+5. 在界面中创建版本标签并推送
+
+===========================================
+🔑 Personal Access Token 获取
+===========================================
+
+如果你还没有 Token:
+
+1. 访问: https://github.com/settings/tokens
+2. 点击 "Generate new token (classic)"
+3. 填写信息:
+   - Note: table-cleaner
+   - Expiration: 90 days 或 No expiration
+   - Select scopes: 勾选 ✅ repo
+4. 点击 "Generate token"
+5. 复制生成的 Token (只显示一次!)
+6. 粘贴到 Git 提示的 Password 处
+
+⚠️ 注意: Token 不是你的 GitHub 密码!
+
+===========================================
+📊 验证推送成功
+===========================================
+
+推送完成后,访问:
+https://github.com/zmx199299/table-cleaner
+
+检查:
+1. ✅ PUSH_TO_GITHUB.sh 文件不存在了
+2. ✅ 最新提交是 "修复 GitHub Actions构建配置"
+3. ✅ 点击 "Actions" 标签,看到有构建任务
+
+===========================================
+🚀 触发自动构建
+===========================================
+
+推送成功后,GitHub Actions 会自动开始构建!
+
+查看构建进度:
+https://github.com/zmx199299/table-cleaner/actions
+
+构建完成后,下载安装包:
+https://github.com/zmx199299/table-cleaner/releases
+
+===========================================
+❓ 常见问题
+===========================================
+
+Q: 推送时提示 "fatal: Authentication failed"
+A: 检查 Token 是否正确,确保有 'repo' 权限
+
+Q: 推送时提示 "Updates were rejected"
+A: 使用强制推送: git push origin master --force
+
+Q: 找不到 Git 命令
+A: 安装 Git: https://git-scm.com/downloads
+
+Q: 不想用命令行
+A: 使用 GitHub Desktop 或 VS Code 的 Git 集成
+
+===========================================
+📞 需要帮助?
+===========================================
+
+详细文档:
+- README.md - 使用教程
+- DEVELOPMENT.md - 开发文档
+- INSTALL.md - 安装指南
+
+===========================================
+作者: zmx199299
+开发工具: CodeBuddy-CN
+日期: 2026-03-13
