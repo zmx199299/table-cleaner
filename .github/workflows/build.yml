@@ -16,13 +16,16 @@ jobs:
         include:
           - os: ubuntu-latest
             platform: linux
+            npm_script: linux
             artifact_name: 表格自动化清理工具-${{ github.ref_name }}.AppImage
             extra_name: 表格自动化清理工具-${{ github.ref_name }}.deb
           - os: windows-latest
             platform: windows
+            npm_script: win
             artifact_name: 表格自动化清理工具 Setup ${VERSION}.exe
           - os: macos-latest
             platform: mac
+            npm_script: mac
             artifact_name: 表格自动化清理工具-${VERSION}.dmg
 
     steps:
@@ -61,7 +64,7 @@ jobs:
         shell: bash
 
       - name: Build application
-        run: npm run build:${{ matrix.platform }}
+        run: npm run build:${{ matrix.npm_script }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
