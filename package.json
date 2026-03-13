@@ -53,15 +53,13 @@
             "x64"
           ]
         }
-      ],
-      "icon": "assets/icon.ico"
+      ]
     },
     "mac": {
       "target": [
         "dmg",
         "zip"
       ],
-      "icon": "assets/icon.icns",
       "category": "public.app-category.productivity"
     },
     "linux": {
@@ -69,7 +67,6 @@
         "AppImage",
         "deb"
       ],
-      "icon": "assets/icon.png",
       "category": "Utility"
     },
     "nsis": {
