@@ -54,13 +54,13 @@ def process_amount_columns(df: pd.DataFrame, amount_column: str, direction_colum
                 continue
             
             # 根据方向添加符号
-            if direction in ['收入', '入', '+', '进', '存']:
+            if direction in ['收入', '入', '+', '进', '存', '借']:
                 if amount < 0:
                     df.at[idx, amount_column] = abs(amount)
                     success += 1
                 else:
                     success += 1
-            elif direction in ['支出', '出', '-', '转', '提']:
+            elif direction in ['支出', '出', '-', '转', '提', '贷']:
                 if amount > 0:
                     df.at[idx, amount_column] = -abs(amount)
                     success += 1
