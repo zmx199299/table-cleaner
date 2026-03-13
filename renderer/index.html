@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表格自动化清理工具</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>表格自动化清理工具</h1>
+    </header>
+
+    <!-- 步骤导航 -->
+    <nav class="steps-nav">
+      <button class="step active" data-step="1">1. 导入文件</button>
+      <button class="step" data-step="2">2. 配置映射</button>
+      <button class="step" data-step="3">3. 清洗导出</button>
+    </nav>
+
+    <!-- 步骤1: 导入文件 -->
+    <section id="step-1" class="step-content active">
+      <div class="card">
+        <h2>目标文件</h2>
+        <div class="file-input">
+          <label for="targetFile">选择目标文件 (Excel/CSV)</label>
+          <input type="file" id="targetFile" accept=".xlsx,.xls,.csv">
+          <span id="targetFileName" class="file-name">未选择文件</span>
+        </div>
+        
+        <div id="sheetSelection" class="sheet-selection hidden">
+          <h3>选择Sheet页面</h3>
+          <div id="sheetList" class="sheet-list"></div>
+        </div>
+
+        <div class="header-row">
+          <label for="headerRow">表头行号:</label>
+          <input type="number" id="headerRow" value="1" min="1">
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>模板文件</h2>
+        <div class="file-input">
+          <label for="templateFile">选择模板文件 (Excel/CSV)</label>
+          <input type="file" id="templateFile" accept=".xlsx,.xls,.csv">
+          <span id="templateFileName" class="file-name">未选择文件</span>
+        </div>
+
+        <div class="date-config">
+          <h3>日期时间配置</h3>
+          <label for="dateColumn">日期时间列:</label>
+          <select id="dateColumn">
+            <option value="">请选择列</option>
+          </select>
+          
+          <div class="date-format">
+            <label>日期格式:</label>
+            <label><input type="radio" name="dateFormat" value="yyyymmdd" checked> YYYYMMDD</label>
+            <label><input type="radio" name="dateFormat" value="yyyymmddhhmmss"> YYYYMMDDHHMMSS</label>
+          </div>
+        </div>
+
+        <div class="amount-config">
+          <h3>金额配置</h3>
+          <label for="amountColumn">交易金额列:</label>
+          <select id="amountColumn">
+            <option value="">请选择列</option>
+          </select>
+          
+          <label for="directionColumn">资金进出方向列:</label>
+          <select id="directionColumn">
+            <option value="">请选择列</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="nextToStep2">下一步: 配置映射 →</button>
+    </section>
+
+    <!-- 步骤2: 配置映射 -->
+    <section id="step-2" class="step-content">
+      <div class="card">
+        <h2>列映射配置</h2>
+        
+        <div class="mapping-display" id="mappingDisplay">
+          <table>
+            <thead>
+              <tr>
+                <th>目标文件列名</th>
+                <th>→</th>
+                <th>模板文件列名</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="mappingTableBody">
+              <!-- 动态生成 -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="add-mapping">
+          <select id="targetColumnSelect">
+            <option value="">选择目标列</option>
+          </select>
+          <span>→</span>
+          <select id="templateColumnSelect">
+            <option value="">选择模板列</option>
+          </select>
+          <button class="btn-secondary" id="addMapping">添加映射</button>
+        </div>
+
+        <div class="mapping-actions">
+          <button class="btn-danger" id="clearMappings">清空所有映射</button>
+          <button class="btn-secondary" id="viewMappings">查看当前映射</button>
+        </div>
+
+        <div class="unmapped-info">
+          <h3>未映射的列</h3>
+          <div class="unmapped-columns">
+            <div>
+              <strong>未映射的目标列 (将被删除):</strong>
+              <ul id="unmappedTarget"></ul>
+            </div>
+            <div>
+              <strong>未映射的模板列 (将留空):</strong>
+              <ul id="unmappedTemplate"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn-secondary" id="backToStep1">← 返回</button>
+        <button class="btn-primary" id="nextToStep3">下一步: 清洗数据 →</button>
+      </div>
+    </section>
+
+    <!-- 步骤3: 清洗导出 -->
+    <section id="step-3" class="step-content">
+      <div class="card">
+        <h2>清洗预览</h2>
+        <div class="preview-table">
+          <table id="previewTable">
+            <!-- 动态生成 -->
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>清洗统计</h2>
+        <div class="statistics" id="statistics">
+          <p>日期格式转换: -</p>
+          <p>金额正负号补全: -</p>
+          <p>列映射应用: -</p>
+          <p>数据行数: -</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>导出设置</h2>
+        <div class="export-config">
+          <div class="path-input">
+            <label for="savePath">保存路径:</label>
+            <input type="text" id="savePath" placeholder="选择保存路径">
+            <button class="btn-secondary" id="browsePath">浏览...</button>
+          </div>
+          
+          <div class="filename-input">
+            <label for="saveFilename">文件名:</label>
+            <input type="text" id="saveFilename" value="清洗后数据" placeholder="输入文件名">
+          </div>
+
+          <div class="format-select">
+            <label>文件格式:</label>
+            <label><input type="radio" name="saveFormat" value="excel" checked> Excel</label>
+            <label><input type="radio" name="saveFormat" value="csv"> CSV</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn-secondary" id="backToStep2">← 返回配置</button>
+        <button class="btn-primary" id="startClean">开始清洗并导出 →</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

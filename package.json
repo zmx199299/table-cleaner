@@ -1,0 +1,80 @@
+{
+  "name": "table-cleaner",
+  "version": "1.0.0",
+  "description": "表格自动化清理工具 - 基于 Electron + Python 的数据清洗应用",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "build:all": "electron-builder -wml"
+  },
+  "keywords": [
+    "data-cleaning",
+    "excel",
+    "csv",
+    "electron",
+    "python"
+  ],
+  "author": {
+    "name": "zmx199299",
+    "email": ""
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "python-shell": "^5.0.0"
+  },
+  "build": {
+    "appId": "com.tablecleaner.app",
+    "productName": "表格自动化清理工具",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "package.json",
+      "python/**",
+      "preload.js",
+      "renderer/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.productivity"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": true
+    }
+  }
+}

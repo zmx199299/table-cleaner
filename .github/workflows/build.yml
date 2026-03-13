@@ -1,0 +1,88 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            artifact_name: 表格自动化清理工具-${{ github.ref_name }}.AppImage
+            extra_name: 表格自动化清理工具-${{ github.ref_name }}.deb
+          - os: windows-latest
+            platform: windows
+            artifact_name: 表格自动化清理工具 Setup ${VERSION}.exe
+          - os: macos-latest
+            platform: mac
+            artifact_name: 表格自动化清理工具-${VERSION}.dmg
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build:${{ matrix.platform }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.platform }}-build
+          path: dist/*.*
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/**/*
+          draft: false
+          prerelease: false
+          body: |
+            ## 表格自动化清理工具 v${{ github.ref_name }}
+            
+            ### 安装包下载
+            
+            - Windows: 下载 .exe 文件
+            - macOS: 下载 .dmg 文件
+            - Linux: 下载 .AppImage 或 .deb 文件
+            
+            ### 更新内容
+            见 [CHANGELOG](https://github.com/你的用户名/table-cleaner/blob/main/CHANGELOG.md)
+            
+            ---
+            * Developed by zmx199299 with CodeBuddy-CN *
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
