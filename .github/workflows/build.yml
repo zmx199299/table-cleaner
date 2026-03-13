@@ -29,7 +29,7 @@ jobs:
           - os: macos-latest
             platform: mac
             npm_script: mac
-            artifact_name: 表格自动化清理工具-${{ github.ref_name }}.dmg
+            artifact_name: table-cleaner-${{ github.ref_name }}.dmg
 
     steps:
       - name: Checkout code
