@@ -22,11 +22,11 @@ jobs:
           - os: windows-latest
             platform: windows
             npm_script: win
-            artifact_name: 表格自动化清理工具 Setup ${VERSION}.exe
+            artifact_name: 表格自动化清理工具-${{ github.ref_name }}-setup.exe
           - os: macos-latest
             platform: mac
             npm_script: mac
-            artifact_name: 表格自动化清理工具-${VERSION}.dmg
+            artifact_name: 表格自动化清理工具-${{ github.ref_name }}.dmg
 
     steps:
       - name: Checkout code

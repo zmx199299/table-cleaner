@@ -47,20 +47,33 @@ EOF
 fi
 
 # 推送 main 分支
-echo "步骤 1/2: 推送 main 分支..."
-git push -u origin main
+echo "步骤 1/3: 同步远程仓库..."
+git fetch origin
 
-if [ $? -ne 0 ]; then
+echo "步骤 2/3: 推送 main 分支..."
+# 尝试正常推送
+if ! git push -u origin main 2>/dev/null; then
     echo ""
-    echo "❌ 推送 main 分支失败!"
-    exit 1
+    echo "⚠️  正常推送失败,尝试强制推送..."
+    echo ""
+    read -p "是否使用强制推送? 这会覆盖远程仓库的内容 (y/n): " FORCE_PUSH
+    
+    if [ "$FORCE_PUSH" = "y" ] || [ "$FORCE_PUSH" = "Y" ]; then
+        git push -u origin main --force
+        
+        if [ $? -eq 0 ]; then
+            echo "✅ main 分支强制推送成功!"
+        else
+            echo "❌ 推送失败!"
+            exit 1
+        fi
+    else
+        echo "❌ 推送已取消"
+        exit 1
+    fi
+else
+    echo "✅ main 分支推送成功!"
 fi
-
-echo "✅ main 分支推送成功!"
-echo ""
-
-# 删除远程 master 分支
-echo "步骤 2/2: 删除远程 master 分支..."
 read -p "确定要删除远程 master 分支吗? (y/n): " CONFIRM
 
 if [ "$CONFIRM" = "y" ] || [ "$CONFIRM" = "Y" ]; then

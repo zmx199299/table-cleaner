@@ -42,7 +42,8 @@
       "package.json",
       "python/**",
       "preload.js",
-      "renderer/**"
+      "renderer/**",
+      "assets/**"
     ],
     "win": {
       "target": [
