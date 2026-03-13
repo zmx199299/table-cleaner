@@ -37,8 +37,20 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Cache Electron
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/electron
+            ~/.cache/electron-builder
+          key: ${{ runner.os }}-electron-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-electron-
+
       - name: Install dependencies
         run: npm install
+        env:
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
 
       - name: Install Python
         run: |
@@ -63,8 +75,10 @@ jobs:
 
       - name: Build application
         run: npm run build:${{ matrix.npm_script }}
+        timeout-minutes: 60
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
