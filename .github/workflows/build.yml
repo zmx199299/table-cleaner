@@ -48,7 +48,11 @@ jobs:
             ${{ runner.os }}-electron-
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          echo "Checking package.json..."
+          cat package.json
+          echo "Installing dependencies..."
+          npm install --verbose
         env:
           ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
 
