@@ -45,6 +45,7 @@
       "renderer/**",
       "assets/**"
     ],
+    "publish": null,
     "win": {
       "target": [
         {
