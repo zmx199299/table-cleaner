@@ -6,6 +6,9 @@ on:
       - 'v*.*.*'
   workflow_dispatch:
 
+permissions:
+  contents: write  # 授予写入内容的权限，包括创建发布
+
 jobs:
   build:
     name: Build on ${{ matrix.os }}
