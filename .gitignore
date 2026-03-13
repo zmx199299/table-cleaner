@@ -45,3 +45,8 @@ Thumbs.db
 
 # Build
 .python-version
+
+# Local scripts
+PUSH_TO_GITHUB.sh
+QUICK_START.txt
+GITHUB_UPLOAD_GUIDE.md
