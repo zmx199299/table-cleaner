@@ -41,7 +41,7 @@ ipcMain.handle('parse-file', async (event, filePath, options) => {
   return new Promise((resolve, reject) => {
     PythonShell.run('python/file_parser.py', {
       mode: 'text',
-      pythonPath: path.join(__dirname, 'venv/bin/python'),
+      pythonPath: process.platform === 'win32' ? path.join(__dirname, 'venv/Scripts/python.exe') : path.join(__dirname, 'venv/bin/python'),
       args: [filePath, JSON.stringify(options)]
     }, (err, result) => {
       if (err) reject(err);
@@ -54,7 +54,7 @@ ipcMain.handle('clean-data', async (event, data) => {
   return new Promise((resolve, reject) => {
     PythonShell.run('python/data_cleaner.py', {
       mode: 'text',
-      pythonPath: path.join(__dirname, 'venv/bin/python'),
+      pythonPath: process.platform === 'win32' ? path.join(__dirname, 'venv/Scripts/python.exe') : path.join(__dirname, 'venv/bin/python'),
       args: [JSON.stringify(data)]
     }, (err, result) => {
       if (err) reject(err);
@@ -67,7 +67,7 @@ ipcMain.handle('save-file', async (event, data, filePath, format) => {
   return new Promise((resolve, reject) => {
     PythonShell.run('python/file_parser.py', {
       mode: 'text',
-      pythonPath: path.join(__dirname, 'venv/bin/python'),
+      pythonPath: process.platform === 'win32' ? path.join(__dirname, 'venv/Scripts/python.exe') : path.join(__dirname, 'venv/bin/python'),
       args: ['--save', JSON.stringify(data), filePath, format]
     }, (err, result) => {
       if (err) reject(err);
