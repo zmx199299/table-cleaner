@@ -74,7 +74,11 @@ jobs:
         shell: bash
 
       - name: Build application
-        run: npm run build:${{ matrix.npm_script }}
+        run: |
+          echo "Building for ${{ matrix.platform }}"
+          echo "Node.js version: $(node -v)"
+          echo "npm version: $(npm -v)"
+          npm run build:${{ matrix.npm_script }}
         timeout-minutes: 60
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
